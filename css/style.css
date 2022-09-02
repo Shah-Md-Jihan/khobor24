@@ -1,3 +1,8 @@
 #category_container {
     list-style: none;
 }
+
+.cat_name {
+    cursor: pointer;
+    text-decoration: none;
+}
