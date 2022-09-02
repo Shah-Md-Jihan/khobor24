@@ -39,21 +39,42 @@ const displayCategoryPost = posts => {
                         <div class="col-md-8 p-4">
                             <div class="card-body">
                                 <h5 class="card-title">${post.title}</h5>
-                                <p class="card-text">${post.details}</p>
+                                <p class="card-text">${post.details.slice(0, 400)}...</p>
                                 
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div></div>
+                            </div >
+                            <div class="row d-flex justify-content-start align-items-center py-3">
+                                <div class="col-md-3 d-flex">
+                                    <div class="w-25">
+                                        <img src="${post.author.img}" class="w-100 rounded-5" alt="not found">
+                                    </div>
+                                    <div class="w-75">
+                                        <small class="ms-2">${post.author.name}</small><br>
+                                        <p class="ms-2"><small>${post.author.published_date}</small></p>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">text</div>
-                                <div class="col-md-3">text</div>
-                                <div class="col-md-3">text</div>
+                                <div class="col-md-3">
+                                    <p><i class="fa-regular fa-eye"></i><span class="ms-2">${post.total_view}</span></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        ${post.rating.number}
+                                        <span class="text-warning ms-2">
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star-half-stroke"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="text-danger ms-5"><i class="fa-solid fa-arrow-right-long"></i></p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-        `;
+                        </div >
+                    </div >
+                </div >
+    `;
         newsContainer.appendChild(newsDiv);
         console.log(post);
     });
