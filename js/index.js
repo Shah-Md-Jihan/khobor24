@@ -13,7 +13,19 @@ const displayCategories = (categories) => {
         `;
         categoryContainer.appendChild(catgoryName);
     });
+
 }
+
+// sorting item counter start 
+
+const newsItem = (item) => {
+
+    const sortingContainer = document.getElementById('found-item-container');
+
+    sortingContainer.innerHTML = `<h3>${item} news items found</h3>`
+}
+
+// sorting item counter end
 
 // load category post 
 const loadCategoryPost = async categoryId => {
@@ -21,23 +33,22 @@ const loadCategoryPost = async categoryId => {
     const postData = await res.json();
 
     const categoryNewsAlert = document.getElementById('category_news_null_alert');
-    // displayCategoryPost();
+
     if (postData.status === false) {
         categoryNewsAlert.classList.remove('d-none');
         displayCategoryPost(postData.data);
-        console.log("data nai");
+        newsItem(0);
+
     } else {
         categoryNewsAlert.classList.add('d-none');
         displayCategoryPost(postData.data);
-
-
     }
+
 
 }
 
 // display category post 
 const displayCategoryPost = posts => {
-
 
     const newsContainer = document.getElementById('news_container');
     newsContainer.textContent = '';
@@ -45,6 +56,8 @@ const displayCategoryPost = posts => {
         return;
     };
     loadSpinner(true);
+
+    let count = 0;
     posts.forEach(post => {
         const newsDiv = document.createElement('div');
         newsDiv.innerHTML = `
@@ -70,7 +83,7 @@ const displayCategoryPost = posts => {
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <p><i class="fa-regular fa-eye"></i><span class="ms-2">${post.total_view}</span></p>
+                                    <p><i class="fa-regular fa-eye"></i><span class="ms-2">${post.total_view === null ? 'Nothing To Show' : post.total_view}</span></p>
                                 </div>
                                 <div class="col-md-3">
                                     <p>
@@ -90,11 +103,15 @@ const displayCategoryPost = posts => {
                 </div >
     `;
         newsContainer.appendChild(newsDiv);
-
+        count = count + 1;
+        // console.log(post);
     });
+    newsItem(count);
     loadSpinner(false);
 
+
 }
+// display category post 
 
 // display news details 
 const displayNewsDetail = async (news_id) => {
@@ -148,10 +165,10 @@ const loadSpinner = (isLoading) => {
     const loaderSection = document.getElementById('spinner');
     if (isLoading === true) {
         loaderSection.classList.remove('d-none');
-        console.log("load hosse");
+
     } else {
         loaderSection.classList.add('d-none');
-        console.log('load ses');
+
     }
 }
 
