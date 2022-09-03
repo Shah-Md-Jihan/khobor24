@@ -52,9 +52,36 @@
         <section>
 
         </section>
+        <!-- spinner section start  -->
+        <section id="spinner" class="d-none">
+            <div class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </section>
+        <!-- spinner section end -->
+
+        <!-- no category news alert -->
+        <section class="d-none w-50 m-auto" id="category_news_null_alert">
+            <p class="text-center">No News To Show</p>
+        </section>
+        <!-- no category news end -->
+
         <section class="mt-5">
             <div id="news_container">
 
+            </div>
+            <div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+                        <div class="modal-content" id="news_detail_container">
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>

@@ -6,3 +6,12 @@
     cursor: pointer;
     text-decoration: none;
 }
+
+.newsArrow {
+    cursor: pointer;
+
+}
+
+.newsArrow:hover {
+    color: green;
+}
