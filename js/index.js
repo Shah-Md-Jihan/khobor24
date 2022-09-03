@@ -16,6 +16,45 @@ const displayCategories = (categories) => {
 
 }
 
+/* ===================show by default news functionality start =============================*/
+
+const defaultDisplayNews = async () => {
+    const defaultNew = await fetch(`https://openapi.programming-hero.com/api/news/category/01`);
+    const defNews = await defaultNew.json();
+    const newses = defNews.data;
+
+    const defaultNewsContainer = document.getElementById('index_news_container');
+    // sorting on total view and slicing on first 6 news 
+    newses.slice(0, 6).sort((a, b) => { return b.total_view - a.total_view }).forEach(news => {
+        const newsDiv = document.createElement('div');
+        newsDiv.classList.add('col');
+        newsDiv.innerHTML = `
+        <div class="card">
+          <img src="${news.image_url}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">${news.title.slice(0, 20)}...</h5>
+            <p class="card-text">${news.details.length > 300 ? news.details.slice(0, 300) + '...' : news.details}</p>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span class="me-5"><i class="fa-regular fa-eye me-2"></i>${news.total_view}</span>
+                    <span class="me-5"><i class="fa-regular fa-star me-2"></i>${news.rating.number}</span>
+                </div>
+                <div>
+                    <span class="me-5 ms-auto newsArrow"><i onclick="displayNewsDetail('${news._id}')" class="fa-solid fa-arrow-right-long" data-bs-toggle="modal" data-bs-target="#exampleModal"></i></span>
+                </div>
+            </div>
+            
+          </div>
+        </div>
+        `;
+
+        defaultNewsContainer.appendChild(newsDiv);
+    });
+}
+defaultDisplayNews();
+
+/*==================== show by default news functionality start =============================*/
+
 // sorting item counter start 
 
 const newsItem = (item) => {
@@ -29,6 +68,8 @@ const newsItem = (item) => {
 
 // load category post 
 const loadCategoryPost = async categoryId => {
+    const indexNewsContainer = document.getElementById('index_news_container');
+    indexNewsContainer.classList.add('d-none');
     const res = await fetch(`https://openapi.programming-hero.com/api/news/category/0${categoryId}`);
     const postData = await res.json();
 
@@ -86,7 +127,7 @@ const displayCategoryPost = posts => {
                                     <p><i class="fa-regular fa-eye"></i><span class="ms-2">${post.total_view === null ? 'Nothing To Show' : post.total_view}</span></p>
                                 </div>
                                 <div class="col-md-3">
-                                    <p>
+                                    <p><i class="fa-regular fa-star"></i>
                                         ${post.rating.number}
                                         <span class="text-warning ms-2">
 
@@ -104,7 +145,7 @@ const displayCategoryPost = posts => {
     `;
         newsContainer.appendChild(newsDiv);
         count = count + 1;
-        console.log(post);
+
     });
     newsItem(count);
     loadSpinner(false);
@@ -117,8 +158,9 @@ const displayCategoryPost = posts => {
 const displayNewsDetail = async (news_id) => {
     const response = await fetch(`https://openapi.programming-hero.com/api/news/${news_id}`);
     const news_data = await response.json();
-    // console.log(news_id);
+
     const news_details = news_data.data[0];
+
     const newsModalContainer = document.getElementById('news_detail_container');
 
     newsModalContainer.innerHTML = `
