@@ -58,7 +58,7 @@ const displayCategoryPost = posts => {
     loadSpinner(true);
 
     let count = 0;
-    posts.forEach(post => {
+    posts.sort((a, b) => { return b.total_view - a.total_view }).forEach(post => {
         const newsDiv = document.createElement('div');
         newsDiv.innerHTML = `
         <div class="card mb-3">
@@ -104,7 +104,7 @@ const displayCategoryPost = posts => {
     `;
         newsContainer.appendChild(newsDiv);
         count = count + 1;
-        // console.log(post);
+        console.log(post);
     });
     newsItem(count);
     loadSpinner(false);
