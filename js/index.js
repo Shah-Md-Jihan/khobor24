@@ -128,13 +128,13 @@ const displayCategoryPost = posts => {
                                 
                             </div >
                             <div class="row d-flex justify-content-start align-items-center py-3">
-                                <div class="col-md-3 d-flex">
+                                <div class="col-md-5 d-flex">
                                     <div class="w-25">
                                         <img src="${post.author.img}" class="w-100 rounded-5" alt="not found">
                                     </div>
                                     <div class="w-75">
-                                        <small class="ms-2">${post.author.name}</small><br>
-                                        <p class="ms-2"><small>${post.author.published_date}</small></p>
+                                        <small class="ms-2">${post.author.name === null ? 'Not found!' : post.author.name}</small><br>
+                                        <p class="ms-2"><small>${post.author.published_date.slice(0, 10)}</small></p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -145,8 +145,8 @@ const displayCategoryPost = posts => {
                                         ${post.rating.number}
                                     </p >
                                 </div >
-                                <div class="col-md-3">
-                                    <p class="text-danger ms-5" onclick="displayNewsDetail('${post._id}')" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-arrow-right-long newsArrow"></i></p>
+                                <div class="col-md-1">
+                                    <p class="text-danger ms-1" onclick="displayNewsDetail('${post._id}')" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-arrow-right-long newsArrow"></i></p>
                                 </div>
                             </div >
                         </div >
@@ -191,16 +191,20 @@ const displayNewsDetail = async (news_id) => {
                             <p class="card-text">${news_details.details}</p>
                         </div>
                         <div class="row d-flex align-items-center">
-                            <div class="col-md-4">
-                                <img src="${news_details.author.img}" class="w-50 rounded-circle">
-                                <p class="p-0 m-0">${news_details.author.name}</p>
-                                <small class="p-0">${news_details.author.published_date.slice(0, 10)}</small>
+                            <div class="col-md-5 col-5 d-flex">
+                                <div class="w-25">
+                                    <img src="${news_details.author.img}" class="w-50 rounded-circle">
+                                    </div>
+                                <div class="w-75">
+                                    <p class="p-0 m-0">${news_details.author.name === null ? 'Not found!' : news_details.author.name}</p>
+                                    <small class="p-0">${news_details.author.published_date.slice(0, 10)}</small>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <p><i class="fa-regular fa-eye"></i><span class="ms-2">${news_details.total_view}</p>
+                            <div class="col-md-4 col-4">
+                                <p><i class="fa-regular fa-eye"></i><span class="ms-2">${news_details.total_view === null ? 'Not found' : news_details.total_view}</p>
                             </div>
-                            <div class="col-md-4">
-                            <p>${news_details.rating.number}</p>
+                            <div class="col-md-3 col-3">
+                            <p><i class="fa-regular fa-star"></i> ${news_details.rating.number}</p>
                             </div>
                         </div>
                     </div>
