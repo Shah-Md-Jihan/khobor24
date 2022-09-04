@@ -1,7 +1,15 @@
 const loadCategories = async () => {
-    const res = await fetch(`https://openapi.programming-hero.com/api/news/categories`);
-    const data = await res.json();
-    displayCategories(data.data.news_category);
+    const url = `https://openapi.programming-hero.com/api/news/categories`;
+
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        displayCategories(data.data.news_category);
+
+    } catch (error) {
+        console.error(error);
+    }
 }
 const displayCategories = (categories) => {
     const categoryContainer = document.getElementById('category_container');
@@ -28,6 +36,7 @@ const defaultDisplayNews = async () => {
     newses.slice(0, 6).sort((a, b) => { return b.total_view - a.total_view }).forEach(news => {
         const newsDiv = document.createElement('div');
         newsDiv.classList.add('col');
+
         newsDiv.innerHTML = `
         <div class="card">
           <img src="${news.image_url}" class="card-img-top" alt="...">
@@ -83,6 +92,7 @@ const loadCategoryPost = async categoryId => {
     } else {
         categoryNewsAlert.classList.add('d-none');
         displayCategoryPost(postData.data);
+
     }
 
 
@@ -96,11 +106,15 @@ const displayCategoryPost = posts => {
     if (posts.length === 0) {
         return;
     };
-    loadSpinner(true);
 
     let count = 0;
+
     posts.sort((a, b) => { return b.total_view - a.total_view }).forEach(post => {
+        loadSpinner(true);
         const newsDiv = document.createElement('div');
+        // <i class="fa-regular fa-star"></i>
+
+        // console.log(post);
         newsDiv.innerHTML = `
         <div class="card mb-3">
                     <div class="row g-0">
@@ -129,10 +143,6 @@ const displayCategoryPost = posts => {
                                 <div class="col-md-3">
                                     <p><i class="fa-regular fa-star"></i>
                                         ${post.rating.number}
-                                        <span class="text-warning ms-2">
-
-    
-                                        </span >
                                     </p >
                                 </div >
                                 <div class="col-md-3">
@@ -147,8 +157,8 @@ const displayCategoryPost = posts => {
         count = count + 1;
 
     });
-    newsItem(count);
     loadSpinner(false);
+    newsItem(count);
 
 
 }
@@ -205,9 +215,9 @@ const displayNewsDetail = async (news_id) => {
 
 const loadSpinner = (isLoading) => {
     const loaderSection = document.getElementById('spinner');
-    if (isLoading === true) {
+    if (isLoading) {
         loaderSection.classList.remove('d-none');
-
+        console.log(isLoading);
     } else {
         loaderSection.classList.add('d-none');
 
